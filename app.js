@@ -50,7 +50,7 @@ app.post("/recipes/new", (req, res) => {
 
 
 
-// Route for updating the recipe (assuming use of PUT method, requiring method-override middleware)
+// Route for updating the recipe.
 app.put('/recipes/:id', (req, res) => {
     // Find the recipe with the given ID
     Recipe.findById(req.params.id)
@@ -80,18 +80,18 @@ app.put('/recipes/:id', (req, res) => {
 
 // Route to render the edit form for a recipe
 app.get('/recipes/edit/:id', (req, res) => {
-    // Find the recipe with the given ID
+    // Finds the recipe with the given ID
     Recipe.findById(req.params.id)
     .then(recipe => {
         if (!recipe) {
             // If recipe is not found, render an error page or handle it appropriately
             return res.status(404).send("Recipe not found");
         }
-        res.render('edit', { recipe }); // Assuming you have a separate EJS file for the edit form
+        res.render('edit', { recipe });
     })
     .catch(err => {
         console.log(err);
-        // Handle the error appropriately, such as rendering an error page or sending an error response
+        // Error handling, when an error occurs
         res.status(500).send("Internal Server Error");
     });
 });
@@ -99,7 +99,7 @@ app.get('/recipes/edit/:id', (req, res) => {
 
 // Route for deleting a recipe
 app.post('/recipes/delete/:id', (req, res) => {
-    // Find the recipe with the given ID and delete it
+    // Finds the recipes with the given ID and delete it
     Recipe.findByIdAndDelete(req.params.id)
     .then(() => {
         res.redirect('/recipes');

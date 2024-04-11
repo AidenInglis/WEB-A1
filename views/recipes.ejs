@@ -33,10 +33,11 @@
 
     <!-- List of recipes -->
     <h2>Recipes</h2>
-    <% if (recipes.length > 0) { %>
+    <% if (recipes && recipes.length > 0) { %>
         <ul>
-            <% recipes.forEach(function(recipe) { %>
+            <% recipes.reverse().forEach(function(recipe) { %>
                 <li>
+                    <h3><strong>Title:</strong></h3>
                     <h3><%= recipe.title %></h3>
                     <p><strong>Ingredients:</strong> <%= recipe.ingredients %></p>
                     <p><strong>Instructions:</strong> <%= recipe.instructions %></p>
