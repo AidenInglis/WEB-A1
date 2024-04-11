@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Book</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Recipe Book</h1>
+
+    <!-- Form to add a new recipe -->
+    <h2>Add a New Recipe</h2>
+    <form action="/recipes/new" method="POST">
+        <div>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="ingredients">Ingredients (comma separated):</label>
+            <input type="text" id="ingredients" name="ingredients" required>
+        </div>
+        <div>
+            <label for="instructions">Instructions:</label>
+            <textarea id="instructions" name="instructions" rows="4" required></textarea>
+        </div>
+        <div>
+            <label for="time">Time (in minutes):</label>
+            <input type="number" id="time" name="time" required>
+        </div>
+        <button type="submit">Add Recipe</button>
+    </form>
+
+    <!-- List of recipes -->
+    <h2>Recipes</h2>
+    <% if (recipes.length > 0) { %>
+        <ul>
+            <% recipes.forEach(function(recipe) { %>
+                <li>
+                    <h3><%= recipe.title %></h3>
+                    <p><strong>Ingredients:</strong> <%= recipe.ingredients %></p>
+                    <p><strong>Instructions:</strong> <%= recipe.instructions %></p>
+                    <p><strong>Time:</strong> <%= recipe.time %> minutes</p>
+                    <!-- Edit and Delete buttons -->
+                    <a href="/recipes/edit/<%= recipe._id %>" class="btn edit">Edit</a>
+                    <form action="/recipes/delete/<%= recipe._id %>" method="POST" style="display: inline;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn delete">Delete</button>
+                    </form>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No recipes found.</p>
+    <% } %>
+</body>
+</html>
