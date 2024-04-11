@@ -67,22 +67,32 @@ app.put('/recipes/:id', (req, res) => {
         })
         .catch(err => {
             console.log(err);
+            res.status(500).send("Internal Server Error");
         });
     })
     .catch(err => {
         console.log(err);
+        res.status(404).send("Recipe not found");
     });
 });
 
-// route to bring up the edit form
+
+
+// Route to render the edit form for a recipe
 app.get('/recipes/edit/:id', (req, res) => {
     // Find the recipe with the given ID
     Recipe.findById(req.params.id)
     .then(recipe => {
-        res.render('recipes', { recipe });
+        if (!recipe) {
+            // If recipe is not found, render an error page or handle it appropriately
+            return res.status(404).send("Recipe not found");
+        }
+        res.render('edit', { recipe }); // Assuming you have a separate EJS file for the edit form
     })
     .catch(err => {
         console.log(err);
+        // Handle the error appropriately, such as rendering an error page or sending an error response
+        res.status(500).send("Internal Server Error");
     });
 });
 
